@@ -12,10 +12,16 @@
   <property name="uuidType" value="uuid" dbms="h2, postgresql"/>
 
   <!-- modules entities -->
+  <include file="config/liquibase/migrate/company/11062026140100_new_entity_Company.xml"
+           relativeToChangelogFile="false"/>
 
   <!-- modules fks -->
+  <include file="config/liquibase/migrate/company/88888888888888_modules_fks.xml"
+           relativeToChangelogFile="false"/>
 
   <!-- modules fixes -->
+  <include file="config/liquibase/migrate/company/99999999999999_modules_fixes.xml"
+           relativeToChangelogFile="false"/>
 
   <!-- global fixes - must be always the last one -->
   <include file="config/liquibase/migrate/99999999999999_global_fixes.xml"
