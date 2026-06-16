@@ -1,8 +1,17 @@
+import org.jetbrains.kotlin.gradle.dsl.JvmTarget
+
 plugins {
-	id 'java'
-	id 'org.springframework.boot' version '4.0.6'
-	id 'io.spring.dependency-management' version '1.1.7'
-	id 'maven-publish'
+  id 'org.springframework.boot' version '4.0.6'
+  id 'io.spring.dependency-management' version '1.1.7'
+
+
+  id 'org.jetbrains.kotlin.jvm' version '2.1.10'
+  id 'org.jetbrains.kotlin.plugin.spring' version '2.1.10'
+  id 'org.jetbrains.kotlin.plugin.jpa' version '2.1.10'
+
+  id 'maven-publish'
+
+
 }
 
 group = 'com.digisphere'
@@ -10,42 +19,63 @@ version = '0.0.1-SNAPSHOT'
 description = 'Demo project for Spring Boot'
 
 java {
-	toolchain {
-		languageVersion = JavaLanguageVersion.of(26)
-	}
+  toolchain {
+    languageVersion = JavaLanguageVersion.of(21)
+  }
+}
+
+kotlin {
+  jvmToolchain(21)
 }
 
 repositories {
-	mavenCentral()
+  mavenCentral()
 }
 
 dependencies {
-	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
-	implementation 'org.springframework.boot:spring-boot-starter-validation'
-	implementation 'org.springframework.boot:spring-boot-starter-webmvc'
+
+
+  implementation 'org.jetbrains.kotlin:kotlin-reflect'
+  implementation 'com.fasterxml.jackson.module:jackson-module-kotlin'
+
+  implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+  implementation 'org.springframework.boot:spring-boot-starter-validation'
+  implementation 'org.springframework.boot:spring-boot-starter-webmvc'
   implementation 'org.springframework.boot:spring-boot-starter-liquibase'
-	compileOnly 'org.projectlombok:lombok'
-	runtimeOnly 'org.postgresql:postgresql'
-	annotationProcessor 'org.projectlombok:lombok'
-	testImplementation 'org.springframework.boot:spring-boot-starter-data-jpa-test'
-	testImplementation 'org.springframework.boot:spring-boot-starter-validation-test'
-	testImplementation 'org.springframework.boot:spring-boot-starter-webmvc-test'
-  testImplementation 'org.springframework.boot:spring-boot-starter-liquibase-test'
-	testCompileOnly 'org.projectlombok:lombok'
-	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
-	testAnnotationProcessor 'org.projectlombok:lombok'
+
+  runtimeOnly 'org.postgresql:postgresql'
+
+  testImplementation 'org.springframework.boot:spring-boot-starter-test'
+
+
+}
+
+tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile).configureEach {
+  compilerOptions {
+
+    jvmTarget.set(
+      JvmTarget.JVM_21
+    )
+
+    freeCompilerArgs.add("-Xjsr305=strict")
+  }
+
+
 }
 
 tasks.named('test') {
-	useJUnitPlatform()
+  useJUnitPlatform()
 }
+
 springBoot {
-	buildInfo()
+  buildInfo()
+  mainClass = 'com.digisphere.pontofacil.DemoApplicationKt'
 }
+
 publishing {
-	publications {
-		mavenJava(MavenPublication) {
-			artifact bootJar
-		}
-	}
+  publications {
+    mavenJava(MavenPublication) {
+      artifact bootJar
+    }
+  }
 }
