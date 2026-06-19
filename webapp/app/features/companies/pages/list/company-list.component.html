@@ -1,0 +1,81 @@
+<section class="relative overflow-x-auto bg-[#111827] shadow-md rounded-xl border border-gray-800">
+  <table class="w-full text-sm text-left rtl:text-right text-gray-400">
+
+    <thead class="text-xs uppercase bg-sidebar/80 text-gray-400 border-b border-gray-800">
+    <tr>
+      <th scope="col" class="px-6 py-4 font-bold tracking-wider">
+        <span class="text-center ">ID</span>
+      </th>
+      <th scope="col" class="px-6 py-4 font-bold tracking-wider">
+        <span class="text-center ">Nome</span>
+      </th>
+      <th scope="col" class="px-6 py-4 font-bold tracking-wider">
+        <span class="text-center ">Telefone</span>
+      </th>
+      <th scope="col" class="px-6 py-4 font-bold tracking-wider">
+        <span class="text-center ">Email</span>
+      </th>
+      <th scope="col" class="px-6 py-4 font-bold tracking-wider">
+        <span class="text-center ">Endereço</span>
+      </th>
+      <th scope="col" class="px-6 py-4 font-bold tracking-wider">
+        <span class="text-center ">Ações</span>
+      </th>
+    </tr>
+    </thead>
+
+    <tbody class="divide-y divide-gray-800/60">
+
+      @for (company of companies; track company?.id) {
+        <tr class="bg-[#111827] hover:bg-gray-800/40 transition-colors">
+
+          <th scope="row" class="px-6 py-4 font-semibold text-white whitespace-nowrap items-center">
+            {{ company?.id }}
+          </th>
+          <td class="px-6 py-4 text-gray-400">
+            {{ company?.name }}
+          </td>
+          <td class="px-6 py-4 text-gray-400">
+            {{ company?.phone }}
+          </td>
+          <td class="px-6 py-4 text-gray-400">
+            {{ company?.email }}
+          </td>
+          <td class="px-6 py-4 text-gray-400">
+            {{ company?.address?.street }}
+          </td>
+
+          <td class="px-6 py-4 flex gap-4 items-center justify-start">
+            <button
+              type="button"
+              class="font-medium text-blue-500 hover:text-blue-500/50 transition-colors flex items-center gap-1"
+              (click)="edit(company?.id)"
+            >
+              <i class="fa-solid fa-pen-to-square text-xl"></i>
+            </button>
+
+            <button
+              type="button"
+              class="font-medium text-red-500 hover:text-red-500/50  transition-colors flex items-center gap-1"
+              (click)="delete(company?.id)"
+            >
+              <i class="fa-regular fa-trash-can text-xl"></i>
+            </button>
+          </td>
+
+        </tr>
+      }
+    <!-- @empty {
+      <tr>
+        <td colspan="6" class="px-6 py-12 text-center text-gray-500 bg-[#111827]">
+          <div class="flex flex-col items-center justify-center gap-2">
+            <span class="text-3xl">📭</span>
+            <p>Nenhum registro encontrado no momento.</p>
+          </div>
+        </td>
+      </tr>
+    } -->
+
+    </tbody>
+  </table>
+</section>
